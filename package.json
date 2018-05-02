@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/zhangmin173/myNode/issues"
   },
-  "homepage": "https://github.com/zhangmin173/myNode#readme"
+  "homepage": "https://github.com/zhangmin173/myNode#readme",
+  "devDependencies": {
+    "marked": "^0.3.19"
+  }
 }
