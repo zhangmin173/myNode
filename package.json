@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/zhangmin173/myNode#readme",
   "devDependencies": {
+    "glob": "^7.1.2",
     "marked": "^0.3.19"
   }
 }

@@ -2,41 +2,58 @@
  * @Author: Zhang Min 
  * @Date: 2018-05-02 14:41:25 
  * @Last Modified by: Zhang Min
- * @Last Modified time: 2018-05-02 15:05:30
+ * @Last Modified time: 2018-05-02 16:07:04
  */
 
 const fs = require('fs');
+const glob = require('glob');
 const path = require('path');
 
 const marked = require('marked');
 
 const dir = {
-    src: path.join(__dirname, './src'),
-    temp: path.join(__dirname, './template'),
-    dist: path.join(__dirname, './dist')
+    src: path.join(__dirname, './src/'),
+    temp: path.join(__dirname, './template/'),
+    dist: path.join(__dirname, './dist/')
 }
-
-fs.readFile(path.join(__dirname, './template/index.html'), 'utf8', (err, template) => {
-    if (err) {
-        throw err
-    } else {
-        fs.readFile(path.join(__dirname, './src/1.md'), 'utf8', (err, markContent) => {
-            if (err) {
-                throw err
-            } else {
-                // 转化好的html字符串
-                let htmlStr = marked(markContent.toString());
-                // 将html模板文件中的'@markdown' 替换为 html字符串
-                template = template.replace('@markdown', htmlStr);
-                // 将新生成的字符串template重新写入到文件中
-                fs.writeFile(path.join(__dirname, './dist/1.html'), template, err => {
-                    if (err) {
-                        throw err
-                    } else {
-                        console.log("success");
-                    }
-                })
-            }
-        })
-    }
+deleteall(dir.dist);
+const mds = glob.sync('**.md', {
+    cwd: dir.src
+});
+console.log(mds);
+mds.forEach(md => {
+    const title = md.split('.')[0];
+    // 读取markdown内容
+    const markContent = fs.readFileSync(dir.src + md);
+    // 转化为html字符串
+    const htmlStr = marked(markContent.toString());
+    // 读取模版
+    let template = fs.readFileSync(dir.temp + 'index.html').toString();
+    // 渲染模版
+    template = template.replace('@markdown', htmlStr).replace('@title', title);
+    // 输出文件
+    fs.writeFile(dir.dist + title + '.html', template, err => {
+        if (err) {
+            console.log(title + '.html failed');
+        } else {
+            console.log(title + '.html success');
+        }
+    })
 })
+
+// 删除文件夹下的所有文件
+function deleteall(path) {
+    var files = [];
+    if (fs.existsSync(path)) {
+        files = fs.readdirSync(path);
+        files.forEach(function (file, index) {
+            var curPath = path + "/" + file;
+            if (fs.statSync(curPath).isDirectory()) {
+                deleteall(curPath); // 删除文件
+            } else { 
+                fs.unlinkSync(curPath); // 删除文件夹
+            }
+        });
+        //fs.rmdirSync(path);
+    }
+};  
