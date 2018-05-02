@@ -1,0 +1,22 @@
+{
+  "name": "mynode",
+  "version": "1.0.0",
+  "description": "my node test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangmin173/myNode.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "303890562@qq.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhangmin173/myNode/issues"
+  },
+  "homepage": "https://github.com/zhangmin173/myNode#readme"
+}
