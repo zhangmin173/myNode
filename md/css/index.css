@@ -1,0 +1,24 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: .075rem;
+}
+
+h1 {
+    font-size: .36rem;
+}
+
+p {
+    font-size: .14rem;
+    line-height: 1.45;
+    margin-bottom: .075rem;
+    color: #595959;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
